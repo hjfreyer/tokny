@@ -3,7 +3,7 @@ name: Grants.gov
 url: https://www.grants.gov
 level: federal
 poll: weekly
-last_checked: null
+last_checked: 2026-11-03
 ---
 
 The single federal catalog. All 26 grant-making agencies post discretionary
@@ -15,19 +15,33 @@ fraction still make sense for a town of ~900 people.
 
 Web: https://www.grants.gov/search-grants
 
-API (no key needed for search):
-`POST https://api.grants.gov/v1/api/search2` with a JSON body. Useful fields:
+API — confirmed 2026-11-03 against the official API guide
+(https://grants.gov/api/api-guide): no key or auth needed for `search2`
+or `fetchOpportunity`.
 
-- `oppStatuses`: `posted|forecasted`
-- `eligibilities`: applicant-type codes, comma separated. The ones that
-  matter here are **`02`** (City or township governments), **`01`** (County
-  governments — for pass-through), `04` (Special district governments),
-  `99` (Unrestricted). Verify codes against the site's advanced-search
-  dropdown before relying on them.
-- `agencies`, `fundingCategories`, `keyword`
+`POST https://api.grants.gov/v1/api/search2`, JSON body, e.g.
+`{"keyword": "", "oppStatuses": "forecasted|posted", "rows": 100, "startRecordNum": 0}`.
+Other accepted fields (from third-party clients, not the official guide):
+`eligibilities`, `agencies`, `fundingCategories`, `aln`.
 
-Fetch a single opportunity's full record with
-`POST https://api.grants.gov/v1/api/fetchOpportunity` and `{"opportunityId": N}`.
+- `eligibilities` takes two-digit codes, comma separated. Confirmed
+  examples: `12` = 501(c)(3) nonprofits, `13` = other nonprofits,
+  `21` = individuals, `23` = small businesses. **Not yet confirmed:**
+  `02` = City or township governments, `01` = County, `04` = Special
+  district, `99` = Unrestricted. The `search2` response carries an
+  `eligibilities` facet with code→label pairs; read the mapping from
+  there on the first real poll and record it here.
+- The applicant-type *labels* used by Grants.gov are: City/Township
+  Governments, County Governments, Special District Governments, State
+  Governments, Unrestricted, and the usual nonprofit/business/individual
+  ones.
+
+`POST https://api.grants.gov/v1/api/fetchOpportunity` with
+`{"opportunityId": N}` returns the full record; eligible-applicant text
+is in the `synopsis` object (or `forecast` for forecasted ones).
+
+Note: this workspace's shell cannot reach `api.grants.gov` (proxy
+allowlist), so polls from here go through the web-fetch tool, not curl.
 
 ## Narrowing
 

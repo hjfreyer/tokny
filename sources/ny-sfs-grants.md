@@ -3,7 +3,7 @@ name: NY Statewide Financial System — Grants Management
 url: https://grantsmanagement.ny.gov
 level: state
 poll: weekly
-last_checked: null
+last_checked: 2026-11-03
 ---
 
 New York's central state grant portal (successor to the old "Grants
@@ -13,14 +13,24 @@ source for a NY town.
 
 ## How to search
 
-The public opportunity listing is reachable from
-https://grantsmanagement.ny.gov (look for "Grant Opportunity Portal" /
-"Search Opportunities"). It is a web app, not an API; expect to scrape or
-read the listing page. Filters include issuing agency, eligible applicant
-type ("Local Government" / "Municipality"), and status (Open / Anticipated).
+Confirmed 2026-11-03 via https://grantsmanagement.ny.gov/search-funding-sfs:
 
-Confirm the exact URL and filter names on first real poll; the site has
-been reorganized before.
+Public search ("Find Grant Opportunities"), no login needed to view:
+https://esupplier.sfs.ny.gov/psp/fscm/SUPPLIER/ERP/c/NY_SUPPUB_FL.AUC_RESP_INQ_AUC.GBL
+
+It is a PeopleSoft web app, not an API. Filters:
+
+- Status: available / anticipated / available and anticipated / closed
+- Eligibility (applicant type): Not-For-Profit, For Profit,
+  **Governmental Entity**, Tribal Organization, Individual
+- Funding Agency, Service Area, Due Date range, Event ID, name
+
+So the narrowing query is Status = available and anticipated,
+Eligibility = Governmental Entity. Expect it to be awkward to scrape;
+a browser session may be needed.
+
+The old Grants Gateway (grantsgateway.ny.gov) still exists for
+nonprofit prequalification but opportunities now live in SFS.
 
 ## Narrowing
 
