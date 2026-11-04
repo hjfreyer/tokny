@@ -13,6 +13,7 @@ submitted anywhere without a human reading the diff.
 ```
 sources/   one file per feed we poll (Grants.gov, NY SFS Grants, CFA, ...)
 grants/    one file per opportunity we have looked at
+tools/     scripts; `python3 tools/index.py` regenerates grants/INDEX.md
 ```
 
 Planned but not started: `town/` (facts about the town that applications

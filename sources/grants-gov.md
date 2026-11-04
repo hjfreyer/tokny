@@ -40,8 +40,13 @@ Other accepted fields (from third-party clients, not the official guide):
 `{"opportunityId": N}` returns the full record; eligible-applicant text
 is in the `synopsis` object (or `forecast` for forecasted ones).
 
-Note: this workspace's shell cannot reach `api.grants.gov` (proxy
-allowlist), so polls from here go through the web-fetch tool, not curl.
+Note: this workspace's shell cannot reach `api.grants.gov` or
+`www.grants.gov` (proxy allowlist), and the www search page is JS-only
+so web-fetch gets nothing from it either. What does work from here:
+`https://simpler.grants.gov/opportunity/<id>` renders eligible applicant
+lists, dates, ceilings and cost-share as static HTML. Until the API host
+is allowlisted, discovery is agency pages + web search, verification is
+simpler.grants.gov.
 
 ## Narrowing
 
@@ -53,10 +58,39 @@ or counties. Signals that one is actually plausible for Kingston:
 - No cost share, or a cost share the town could cover in-kind.
 - Award floor under ~$250k, or a program that explicitly funds planning.
 
-Programs to keep an eye on specifically: USDA Community Facilities,
-USDA Rural Energy for America, EPA Brownfields assessment, FEMA BRIC and
-Hazard Mitigation (usually via NYS DHSES), DOT Safe Streets for All
-planning grants, NEA/IMLS for a library or historical society partner.
+Programs filed in `grants/` from the 2026-11-04 sweep: USDA RD
+(Community Facilities, Water & Waste, SEARCH, ECWAG, Community Connect,
+RBDG), NRCS EWP, EPA Brownfields, FEMA (BRIC, HMGP, FMA, AFG, SAFER,
+FP&S), DOT SS4A, NTIA Digital Equity, NPS CLG, NEH PAG, and
+congressionally directed spending.
+
+## Looked at and rejected (2026-11-04)
+
+- **USDA REAP** — ag producers and rural small businesses only; towns
+  not eligible.
+- **USDA ReConnect** — towns eligible but no round open or announced
+  since 2024. Re-file if a Round 6 NOFO posts.
+- **USDA Distance Learning & Telemedicine** — requires running end-user
+  sites; not plausible.
+- **EPA EJ / Community Change Grants** — terminated 2025, in litigation,
+  no open NOFO.
+- **EPA Clean School Bus** — school districts only in NY.
+- **EPA WIIN small/underserved water grants** — flows to the state; see
+  state programs.
+- **FEMA EMPG** — states only; reaches counties via DHSES.
+- **DOT BUILD (ex-RAISE)** — $1M–$25M capital awards; wrong scale.
+- **DOT Rural Surface Transportation** — 90% of funds in $25M+ awards.
+- **FHWA Charging & Fueling Infrastructure** — no NOFO, no date.
+- **DOE EECBG** — one-time BIL program, window closed 2024.
+- **NTIA BEAD** — state-run via ConnectALL; towns aren't applicants.
+- **LWCF Outdoor Recreation Legacy Partnership** — urban areas ≥25k
+  only. Stateside LWCF is inside the NY Parks EPF round (CFA).
+- **Northern Border Regional Commission** — Ulster not an eligible county.
+- **IMLS Inspire! small museums** — applicant must be a museum.
+- **NEA Grants for Arts Projects** — needs an arts-programming record.
+- **FHWA Recreational Trails** — NY pass-through via OPRHP in the CFA.
+- **EDA Public Works / Economic Adjustment** — scale and CEDS
+  requirement make it implausible; not researched further.
 
 ## Prerequisites to apply
 
