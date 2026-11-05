@@ -15,38 +15,46 @@ fraction still make sense for a town of ~900 people.
 
 Web: https://www.grants.gov/search-grants
 
-API — confirmed 2026-11-03 against the official API guide
-(https://grants.gov/api/api-guide): no key or auth needed for `search2`
-or `fetchOpportunity`.
+API — confirmed against the official guide (https://grants.gov/api/api-guide)
+and exercised 2026-11-05: no key or auth needed for `search2` or
+`fetchOpportunity`.
 
-`POST https://api.grants.gov/v1/api/search2`, JSON body, e.g.
-`{"keyword": "", "oppStatuses": "forecasted|posted", "rows": 100, "startRecordNum": 0}`.
-Other accepted fields (from third-party clients, not the official guide):
-`eligibilities`, `agencies`, `fundingCategories`, `aln`.
+`tools/grants_gov_pull.py OUTDIR [codes|all]` pulls every open and
+forecasted record (one `fetchOpportunity` per hit, politely serial,
+~8 minutes for the full catalog); `tools/grants_gov_table.py OUTDIR`
+flattens them to a TSV. A dated snapshot lives in `data/grants-gov/`.
 
-- `eligibilities` takes two-digit codes, comma separated. Confirmed
-  examples: `12` = 501(c)(3) nonprofits, `13` = other nonprofits,
-  `21` = individuals, `23` = small businesses. **Not yet confirmed:**
-  `02` = City or township governments, `01` = County, `04` = Special
-  district, `99` = Unrestricted. The `search2` response carries an
-  `eligibilities` facet with code→label pairs; read the mapping from
-  there on the first real poll and record it here.
-- The applicant-type *labels* used by Grants.gov are: City/Township
-  Governments, County Governments, Special District Governments, State
-  Governments, Unrestricted, and the usual nonprofit/business/individual
-  ones.
+Eligibility codes (from the `search2` facet, 2026-11-05):
+`00` State, `01` County, `02` **City or township**, `04` Special
+district, `05` School district, `06`/`20` public/private higher ed,
+`07`/`11` tribal, `08` housing authorities, `12`/`13` nonprofits,
+`21` individuals, `22`/`23` for-profit/small business, `25` **Others
+(see text)**, `99` Unrestricted.
 
-`POST https://api.grants.gov/v1/api/fetchOpportunity` with
-`{"opportunityId": N}` returns the full record; eligible-applicant text
-is in the `synopsis` object (or `forecast` for forecasted ones).
+**Don't filter on `02`.** Most agencies tag only `25 Others` and put
+the real eligibility in `applicantEligibilityDesc` (EPA Brownfields is
+tagged that way). Pull everything and read the text.
 
-Note: this workspace's shell cannot reach `api.grants.gov` or
-`www.grants.gov` (proxy allowlist), and the www search page is JS-only
-so web-fetch gets nothing from it either. What does work from here:
-`https://simpler.grants.gov/opportunity/<id>` renders eligible applicant
-lists, dates, ceilings and cost-share as static HTML. Until the API host
-is allowlisted, discovery is agency pages + web search, verification is
-simpler.grants.gov.
+### What the catalog looks like (2026-11-05)
+
+1,456 open + forecasted (867 posted, 589 forecasted). By top agency:
+HHS 921, NSF 118, DoD 90, State 82, Interior 51, DOJ 32, Commerce 25,
+USDA 21, NASA 19, HUD 16, DOE 14, IMLS 13, DOT 11, **EPA 9**, others
+<10 each. After dropping research agencies, NIH, and titles with
+research/clinical/fellowship words, and keeping anything tagged `02`
+or whose text mentions local governments/municipalities/towns/rural:
+182 — of which 108 are HHS health-system programs for states and
+providers. The non-HHS remainder (74) contained exactly one thing
+not already filed: the FY2026 Flood Mitigation Assistance NOFO
+(DHS-26-MT-029-000-98, due 2027-02-26), now recorded in
+`2027-fema-flood-mitigation-assistance`.
+
+So the lesson from the first full pull: the federal catalog at any
+moment holds a handful of programs for a town this size, all of them
+annual and already known. The value of polling is catching the
+*posting date* of those known programs (FMA, Brownfields, SS4A, AFG,
+Community Connect) — not discovering new ones. A weekly diff against
+`data/grants-gov/` on title + number is enough.
 
 ## Narrowing
 

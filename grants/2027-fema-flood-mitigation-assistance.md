@@ -5,7 +5,7 @@ source: fema
 url: https://www.dhses.ny.gov/system/files/documents/2026/05/dhses_fema-fy2024-fma-application-announcement_0.pdf
 amount: "localized flood risk reduction projects up to $50M federal; capability/capacity-building and project scoping also funded (FY2024 NOFO $600M nationally)"
 match: "25% generally (75% federal); up to 90%/100% federal for Repetitive Loss / Severe Repetitive Loss properties"
-deadline: null
+deadline: 2027-02-26
 found: 2026-11-04
 status: candidate
 fit: unassessed
@@ -61,3 +61,11 @@ capped at 5% for subapplicants. Contact HazardMitigation@dhses.ny.gov,
 - 2026-11-04: Filed from the DHSES FY2024 FMA application
   announcement (PDF). FY2024 round closed 2026-06-18 for NY
   subapplicants; watch DHSES for the FY2025/FY2026 round.
+- 2026-11-05: **FY2026 NOFO is posted** on Grants.gov —
+  DHS-26-MT-029-000-98, posted 2026-10-22, federal deadline
+  2027-02-26, cost sharing required. Eligibility text: "Local
+  governments must apply through their state or territory", so the
+  NY subapplicant deadline set by DHSES will be earlier — probably
+  January 2027. Nothing on dhses.ny.gov/grants yet as of 2026-11-04.
+  A separate FY2026 "Swift Current" FMA (Grants.gov 363151, through
+  2028-01-31) is post-disaster only and needs a NY flood declaration.
